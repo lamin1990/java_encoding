@@ -1,0 +1,12 @@
+package test;
+import MyEncodingLogic.Codec;
+
+public class EncodeTest {
+	Codec test = new Codec("lamin");
+	
+	public String testEncode() {
+		return null;
+		
+	}
+
+}

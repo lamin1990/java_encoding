@@ -1,0 +1,119 @@
+/** Simple string encoder/decoder. Also includes a simple hash calculator.
+ *
+ * This uses very simple algorithms, and always results in a string exactly the same size as the input string.
+ */
+public class SimpleCodec {
+	/**
+	 * Encodes the given string.
+	 * 
+	 * @param data the string to be encoded.
+	 * @return the encoded version of the string.
+	 */
+	String encodeString(String data) {
+		
+		// get the individual bytes of the string (easier to manipulate).
+		byte [] bytes = data.getBytes();
+		
+		// create another byte array the same size (to store encoded version).
+		byte [] outBytes = new byte[bytes.length];
+		
+		// Iterate over each byte of the string
+		for (int i=0; i < bytes.length; i++) {
+			
+			outBytes[i] = (byte) (bytes[i] + 1);	// very simple encoding. This would be easy to break!
+		}
+		
+		// return the encoded version converted back to a string.
+		return new String(outBytes);
+	}
+	
+	
+	/**
+	 * Decodes the given string.
+	 * 
+	 * @param data the string to be decoded.
+	 * @return the decoded version of the string.
+	 */
+	String decodeString(String data) {
+		
+		byte [] bytes = data.getBytes();
+		
+		byte [] outBytes = new byte[bytes.length];
+		
+		for (int i=0; i < bytes.length; i++) {
+			
+			outBytes[i] = (byte) (bytes[i] - 1);	// apply opposite calculation used for encoding, in order to decode.
+		}
+		
+		return new String(outBytes);
+	}
+	
+	/**
+	 * Generates a hash value from the given string.
+	 * 
+	 * @param data the string to be hashed.
+	 * @return a hash value for the string.
+	 */
+	String generateHash(String data) {
+		
+		long hash = 0;
+		
+		byte [] bytes = data.getBytes();
+		
+		// Iterate over each byte of the string, and use to calculate the hash
+		for (byte b : bytes) {
+			
+			hash += b * 13;
+		}
+		
+		// create a very simple hash (total of byte values, each multiplied by a prime number, all of which is multiplied by string size, then by another prime number)
+		hash = hash * data.length() * 997;
+		
+		// make it slightly more obscure by applying a few xor operations to a shifted value.
+		hash = hash ^ hash << 16;
+		hash = hash ^ hash << 24;
+		
+		// Format the hash to use 16 chars (since this is the max size of a long)
+		return String.format("%016X", hash);
+	}
+	
+	/**
+	 * Simple main method that drives the example methods.
+	 * 
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		SimpleCodec codec = new SimpleCodec();
+		
+		String original = "This is a test string to be encoded";
+		
+		String encoded = codec.encodeString(original);	
+		System.out.println("Encoding : " + original);
+		System.out.println("Result   : " + encoded);
+		System.out.println();
+		
+		byte initial = (byte)127;
+		byte doubleValue = (byte) ((byte) initial + 2);
+		byte divValue = (byte) ((byte)doubleValue - 2);
+		
+		System.out.println("Initial: " + new String(new byte[] { initial }));
+		System.out.println("Double: " + new String(new byte[] { doubleValue }));
+		System.out.println("Division: " + new String(new byte[] { divValue }));
+		
+		
+		String decoded = codec.decodeString(encoded);
+		System.out.println("Decoding : " + encoded);
+		System.out.println("Result   : " + decoded);
+		System.out.println();
+				
+		if ( original.equals(decoded) )
+			System.out.println("The original and decoded versions match, so the encode and decode is working");
+		else
+			System.out.println("The original and decoded versions do not match, so the encode and decode is failing");
+		
+		System.out.println();
+		System.out.println("Hash value of original string is : " + codec.generateHash(original));
+	}
+
+}

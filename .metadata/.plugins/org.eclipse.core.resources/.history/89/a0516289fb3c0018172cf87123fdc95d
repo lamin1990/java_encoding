@@ -1,0 +1,225 @@
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+public class WindowSplitPane implements ActionListener {
+
+	/**
+	 * Declare variables
+	 */
+	static JSplitPane splitPane;
+	private JTextArea textArea;
+	static JPanel panel;
+	private JScrollPane leftScroll;
+	private JScrollPane rightScroll;
+	private JButton encode;
+	private JButton decode;
+	private JButton generateHash;
+	private JLabel label;
+	private JPanel buttonPanel; 
+	
+	private final ICodec codec;
+	private final IHasher hasher;
+	@SuppressWarnings("unused")
+	private FileContentState contentState;
+	
+	/**
+	 * Constructor
+	 * @param codec
+	 * @param hasher
+	 */
+	public WindowSplitPane(ICodec codec, IHasher hasher) {
+		this.codec = codec;
+		this.hasher = hasher;
+		this.contentState = FileContentState.Decoded;
+	}
+	
+	
+	/**
+	 * Create a method to setup splitpane
+	 * initialize variables
+	 * 
+	 * @return splitPane
+	 */
+	JSplitPane setupContent() {
+		
+		
+		textArea = new JTextArea(100,50);
+		panel = new JPanel();
+		
+		leftScroll = new JScrollPane(textArea);
+		buttonPanel = new JPanel();
+		rightScroll = new JScrollPane(buttonPanel);
+		//buttonPanel.setBackground(Color.CYAN);
+		
+		encode = new JButton("Encode");
+		decode = new JButton("Decode");
+		generateHash = new JButton("Generate Hash");
+		label = new JLabel("Push a button");
+	
+		
+		//buttonPanel = new JPanel();
+		/**
+		 * Setup buttons on the button panel
+		 */
+		buttonPanel.setPreferredSize(new Dimension(200,40));
+		buttonPanel.setBackground(Color.WHITE);
+		buttonPanel.add(encode);
+		buttonPanel.add(decode);
+		buttonPanel.add(generateHash);
+		buttonPanel.add(label);
+		
+		
+		rightScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScroll, rightScroll);
+		rightScroll.setColumnHeaderView(panel);
+		
+		textArea.setWrapStyleWord(true);
+		textArea.setEditable(true);
+		textArea.setLineWrap(true);
+		splitPane.setOneTouchExpandable(true);
+		splitPane.setDividerLocation(300);
+		
+		/**
+		 * Add action listener to the JButton
+		 */
+		encode.addActionListener(this);
+		decode.addActionListener(this);
+		generateHash.addActionListener(this);
+		
+		return splitPane;
+		
+	}
+	
+	/**
+	 * A method to read file
+	 */
+	public void readFile() {
+			//String directory = "src";
+			final JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(null);
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				// User has selected to open the file
+				File file = fc.getSelectedFile();
+				// clear the current content of the text area
+				textArea.setText("");
+				try {
+					// Open the selected file
+					BufferedReader reader = new BufferedReader(new FileReader(file));
+					// Read contents and append textArea1
+					String nextLine = reader.readLine();
+					while (nextLine != null) {
+						textArea.append(nextLine + ("\n"));
+						nextLine = reader.readLine();
+					}
+					reader.close();
+					this.contentState = FileContentState.Decoded;
+				} catch (IOException e) {
+					System.err.println("Error while reading the file");
+				}
+			}
+	
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		JButton clickedBtn = (JButton) e.getSource();
+		String textAreaValue = this.textArea.getText();
+		
+		if(clickedBtn == this.encode) {
+			if( textAreaValue == null || textAreaValue.trim().isEmpty()) {
+				// the text area is empty - we cannot encode an empty value
+				// validation - show dialog box asking user to load a file
+				JOptionPane.showMessageDialog(null, "Please load or write something in the text area to encode, decode or generate hash");
+				return;
+			}
+			
+			textAreaValue = this.codec.Encode(textAreaValue);
+			/**
+			 * disable encode button - avoid double encoding
+			 */
+			//this.encode.setEnabled(false);
+			/**
+			 * enable decode button
+			 */
+			//this.decode.setEnabled(true);
+			this.contentState = FileContentState.Encoded;
+		}
+		else if(clickedBtn == this.decode) {
+			textAreaValue = this.codec.Decode(textAreaValue);
+			// disable decode button - avoid double decoding
+			//this.decode.setEnabled(false);
+			// enable encode button
+			//this.encode.setEnabled(true);
+			this.contentState = FileContentState.Decoded;
+		}
+		else if(clickedBtn == this.generateHash) {
+			// generate the hash
+			textAreaValue = this.hasher.Hash(textAreaValue);
+		}
+		
+		/**
+		 * set the text area new value
+		 */
+		this.textArea.setText(textAreaValue);
+	}
+
+	
+	public void saveFile() {
+		String fileContent = this.textArea.getText();
+		
+		if(fileContent == null || fileContent.isEmpty()) {
+			return;
+		}
+		
+		final JFileChooser fc = new JFileChooser();
+		int returnCode = fc.showSaveDialog(null);
+		if(returnCode == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			
+			if(file.getName().isEmpty()) {
+				JOptionPane.showMessageDialog(null, "Invalid file name");
+			}
+			
+			if(file.exists())
+				file.delete();
+			
+			FileWriter writer;
+			try {
+				writer = new FileWriter(file);
+				writer.write(this.textArea.getText());
+				writer.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			JOptionPane.showMessageDialog(null, "file saved at " + file.getAbsolutePath());
+		}
+	}
+}

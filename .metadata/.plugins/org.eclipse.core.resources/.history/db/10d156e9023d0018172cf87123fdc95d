@@ -1,0 +1,32 @@
+/**
+ * 
+ */
+package Tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/**
+ * @author user
+ *
+ */
+class HasherTest {
+
+	/**
+	 * @throws java.lang.Exception
+	 */
+	@BeforeEach
+	void setUp() throws Exception {
+	}
+
+	/**
+	 * Test method for {@link main.app.Hasher#Hash(java.lang.String)}.
+	 */
+	@Test
+	void testHash() {
+		fail("Not yet implemented");
+	}
+
+}

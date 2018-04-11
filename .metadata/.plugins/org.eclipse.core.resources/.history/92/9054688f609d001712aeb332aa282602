@@ -1,0 +1,30 @@
+
+class Counter {
+	int value = 1;
+	
+	
+	void setVal(int v) {
+		value = v;
+	}
+	int getValue() {
+		return value;
+	}
+	public static void main(String args []) {
+		Counter s1 = new Counter();
+		s1.setVal(10);
+		System.out.println("s1 count value is " + s1.getValue());
+	}
+	int num1 = 2;
+	void setnumber(int n) {
+		num1 = n;
+	}
+	int getnum1() {
+		return num1;
+	}
+	{
+	Counter f1 = new Counter();
+	f1.setnumber(50);
+	System.out.println("f1 count value is " + f1.getnum1());
+	}
+
+}

@@ -1,0 +1,28 @@
+package test;
+import MyEncodingLogic.Codec;
+import static org.junit.Assert.*;
+import org.junit.Test;
+
+public class EncodeTest {
+	Codec test = new Codec("123456");
+	
+	@Test
+	public void testEncode() {
+		System.out.println(test.Encode("lamin"));
+		//assertTrue(false);
+		
+		
+	}
+
+	
+	
+	
+//	@Test
+//	public void testDecode() {
+//		System.out.println(test.Encode("lamin"));
+//		assertTrue
+//		
+//		
+//	}
+
+}

@@ -1,0 +1,126 @@
+import java.util.Scanner;
+import java.util.regex.Pattern;
+
+public class store_array_match_score {
+	
+	
+		private static Match match = new Match();
+		
+		public static boolean isInputValid(String input) {
+			
+			// define the expected input format
+			String pattern = "[\\w\\s]+:[\\w\\s]+:(\\d+):(\\d+)";
+			
+			// check if the input match the expected format using regex
+			// if not matching, then return error
+			if (!input.matches(pattern)) {
+				System.out.println("INVALID FORMAT");
+				return false;
+			}
+			
+			
+			// If the input is blank
+			if (null == input || input.trim().length() == 0) {
+				System.out.println("No input");
+				return false;
+			}
+			
+			// check if input contains the delimiter, i.e. colon
+			if (!input.contains(":")) {
+				// check if it contains any other special character
+				System.out.println("No Colon");
+				return false;
+			}
+			
+			// split the input by delimeter
+			String [] elements = input.split(":");
+			
+			// check if the elements after split is no less than 4 or greater
+			if (elements.length < 4 || elements.length > 4) {
+				System.out.println("Incorrect number of elements");
+				return false;
+			}
+			
+			
+			// save the data into match entity
+			match.setHomeTeam(elements[0]);
+			match.setAwayTeam(elements[1]);
+			match.setHomeScore(Integer.parseInt(elements[2]));
+			match.setAwayScore(Integer.parseInt(elements[3]));
+			
+			return true;
+		}
+		
+		public static String getResult() {
+			return match.getHomeTeam() + " ["+match.getHomeScore()+"] " + match.getAwayTeam() + " [" +match.getAwayScore() + "]"; 
+		}
+
+		public static void main(String[] args) {
+			//declare and initialise variables
+			String [] product_list = new String [100];
+			int counter = 0;
+			
+			
+			Scanner inputScanner = new Scanner(System.in);
+			System.out.println("Input Home team: Away team : Home score : Away score ");
+			
+			while (inputScanner.hasNextLine()) {
+				String line = inputScanner.nextLine();
+				if (line.equals("stop")) {
+						break;
+				} else {
+					product_list[counter] = line;
+					
+
+				}
+			counter++;	
+
+			}
+			
+			inputScanner.close();
+			
+			for (int i = 0; i < counter; i++) {
+				if (isInputValid(product_list[i])) {
+					System.out.println(getResult());
+				}
+			}
+			
+			
+			
+
+
+//
+//			for ( int i = 0; i < counter; i++ ) {
+//				String [] elements = product_list[i].split(":");
+//				if (elements.length < 4 || elements.length > 4) {
+//					
+//				} else {
+//					String homeTeam = elements[0];
+//					String awayTeam = elements[1];
+//					try {
+//					int homeScore = Integer.parseInt(elements[2]);
+//					} catch (NumberFormatException exception) {
+//						
+//						
+//					}
+//					
+//					
+//				
+//					int homeScore = 1;
+//					String result = homeTeam + " ["+homeScore+"]" + " " + awayTeam + " ["+awayScore+"]";
+//				}
+//				
+//				for ( int j = 0; j < elements.length; j++ ) {
+//					System.out.println("HERE");
+//					System.out.print(elements[j]  + " ");
+//					
+//				}
+//				
+//				
+//				System.out.println(" ");
+//			}
+				}
+		
+					}
+
+

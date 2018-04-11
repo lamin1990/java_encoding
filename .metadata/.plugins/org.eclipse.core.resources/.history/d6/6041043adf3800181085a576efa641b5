@@ -1,0 +1,16 @@
+package test;
+import org.junit.*;
+import junit.framework.TestCase;
+import Codec;
+
+public class JavaTest extends TestCase {
+	Codec test = new Codec("lamin");
+	@Test
+	public String encodeTest(String data) {
+		
+		
+		
+		
+	}
+
+}

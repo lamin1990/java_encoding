@@ -1,0 +1,23 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+class HashTest {
+
+	/**
+	 * Test method for {@link Hasher#Hash(java.lang.String)}.
+	 */
+	@Test
+	void testHash() {
+		fail("Not yet implemented");
+	}
+
+}

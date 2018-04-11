@@ -1,0 +1,40 @@
+import java.awt.*;
+
+import javax.swing.BorderFactory;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+
+public class GUIInterface {
+	
+	public GUIInterface() {
+		createFrame();
+	}
+	
+	public void createFrame() {
+		
+		JFrame frame = new JFrame();
+		frame.setSize(800, 600);
+		frame.setLayout(new BorderLayout());
+
+
+		
+		JPanel graphPanel = new JPanel();
+		graphPanel.setPreferredSize(new Dimension (770, 330));
+		graphPanel.setBackground(Color.WHITE);
+		
+		//add graph panel to frame using layout manager set to north
+		frame.getContentPane().add(graphPanel,BorderLayout.NORTH);
+		
+		JPanel textPanel = new JPanel();
+		textPanel.setPreferredSize(new Dimension (770, 460));
+		textPanel.setBackground(Color.LIGHT_GRAY);
+
+		frame.getContentPane().add(textPanel,BorderLayout.SOUTH);
+		
+		
+		
+		frame.setVisible(true);
+	}
+
+}

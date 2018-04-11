@@ -1,0 +1,17 @@
+
+class Counter {
+	int value = 1;
+	
+	void setValue(int v) {
+		value = v;
+	}
+	int getValue() {
+		return value;
+	}
+	public static void main(String args []) {
+		Counter s1 = new Counter();
+		s1.setValue(10);
+		System.out.println("s1 count value is " + s1.getValue());
+	}
+
+}

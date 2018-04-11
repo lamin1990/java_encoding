@@ -1,0 +1,10 @@
+package test;
+
+public class EncodeTest {
+	Codec test = new Codec("lamin");
+	
+	public String testEncode() {
+		
+	}
+
+}

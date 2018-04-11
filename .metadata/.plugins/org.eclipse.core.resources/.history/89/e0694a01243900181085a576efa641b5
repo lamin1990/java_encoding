@@ -1,0 +1,80 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+class Test {
+
+	@org.junit.jupiter.api.Test
+	void testCodec() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testEncode() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testDecode() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testObject() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testGetClass() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testHashCode() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testEquals() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testClone() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testToString() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testNotify() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testNotifyAll() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testWaitLong() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testWaitLongInt() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testWait() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	@org.junit.jupiter.api.Test
+	void testFinalize() {
+		fail("Not yet implemented"); // TODO
+	}
+
+}

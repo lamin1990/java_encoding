@@ -1,0 +1,20 @@
+import java.util.Scanner;
+import java.text.NumberFormat;
+//***************************************************************
+//Salary.java
+//
+//Computes the amount of a raise and the new
+//salary for an employee.  The current salary
+//and a performance rating (a String: "Excellent",
+//"Good" or "Poor") are input.
+//***************************************************************
+	
+public class Lab7
+{
+	public static void main(String[] args)
+	{
+		double rate = 0.06;
+		String rating;
+	
+		
+	

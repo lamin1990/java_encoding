@@ -1,0 +1,54 @@
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+//import static org.junit.jupiter.api.Assertions.*;
+
+
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+class Test {
+
+	/**
+	 * Test method for {@link Codec#Codec(java.lang.String)}.
+	 */
+//	@org.junit.jupiter.api.Test
+//	final void testCodec() {
+//		fail("Not yet implemented"); // TODO
+//	}
+
+
+	/**
+	 * Test method for {@link Codec#Encode(java.lang.String)}.
+	 */
+	@org.junit.jupiter.api.Test
+	final void testEncode() {
+		Codec test = new Codec("123456");
+		//fail("Not yet implemented"); // TODO
+		System.out.println(test.Encode("lami"));
+		//assertTrue(false);
+		String expected = "jlbx21436B";
+		
+		assertThat(expected, is(test.Encode("lami")));
+	}
+
+	/**
+	 * Test method for {@link Codec#Decode(java.lang.String)}.
+	 */
+	@org.junit.jupiter.api.Test
+	final void testDecode() {
+		Codec test = new Codec("123456");
+		//fail("Not yet implemented"); // TODO
+		System.out.println(test.Decode("jlbx21436B"));
+		//assertTrue
+		String expected = "lami";
+		assertThat(expected, is(test.Decode("jlbx21436B")));
+	}
+
+}

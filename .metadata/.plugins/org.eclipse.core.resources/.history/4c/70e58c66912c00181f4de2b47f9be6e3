@@ -1,0 +1,38 @@
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+public class Menu {
+	/**
+	 * Sets up the Menu
+	 * @return the created menu
+	 */
+	JMenuBar setupMenu() {
+		/**
+		 * Create the menubar itself
+		 */
+		JMenuBar menuBar = new JMenuBar();
+		
+		/**
+		 * Create a menu
+		 */
+		JMenu fileMenu = new JMenu("Menu");
+		JMenu helpMenu = new JMenu("Help");
+		
+		/**
+		 * Add menus to the menubar
+		 */
+		menuBar.add(fileMenu);
+		menuBar.add(helpMenu);
+		return menuBar;
+		
+	}
+
+}

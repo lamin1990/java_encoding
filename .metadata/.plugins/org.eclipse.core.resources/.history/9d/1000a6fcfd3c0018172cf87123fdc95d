@@ -1,0 +1,24 @@
+package Tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+class CodecTest {
+
+	@BeforeEach
+	void setUp() throws Exception {
+	}
+
+	@Test
+	void testEncode() {
+		fail("Not yet implemented");
+	}
+
+	@Test
+	void testDecode() {
+		fail("Not yet implemented");
+	}
+
+}

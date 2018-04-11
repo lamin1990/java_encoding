@@ -1,0 +1,165 @@
+
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Stroke;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+
+
+/**
+ * A simple example of a JPanel that draws a graph.
+ * 
+ * @author mdixon
+ */
+@SuppressWarnings("serial")
+public class GraphDiagram extends JPanel {
+   
+   private static int MAX_Y_VALUE = 20;
+   private static final int PREF_W = 600;
+   private static final int PREF_H = 300;
+   private static final int BORDER_GAP = 30;
+   private static final Color GRAPH_COLOR = Color.green;
+   private static final Color GRAPH_POINT_COLOR = new Color(150, 50, 50, 180);
+   private static final Color Y_AXIS_COLOR = Color.BLACK;
+   private static final int GRAPH_POINT_WIDTH = 12;
+   private static final int Y_HATCH_CNT = 10;
+   
+	public GraphDiagram() {
+		setPreferredSize(new Dimension(PREF_W, PREF_H));
+		setBackground(Color.WHITE);
+		setOpaque(false);
+	}
+
+
+	/**
+	 * A method that draws a simple graph using the given array of Y values
+	 * 
+	 * @param g the Graphics object used for drawing.
+	 * @param axisData the array of yCoordinates
+	 * @param xStart the starting value for the xAxis
+	 * @param XInterval the stepping value for the xAxis
+	 */
+	public void drawGraph(Graphics g, float[] axisData, float xStart, float XInterval) {
+		g.setColor(Color.BLUE);
+		double xScale = ((double) getWidth() - 2 * BORDER_GAP) / (axisData.length - 1);
+		double yScale = ((double) getHeight() - 2 * BORDER_GAP) / (MAX_Y_VALUE - 1);
+
+		List<Point> graphPoints = new ArrayList<Point>();
+		for (int i = 0; i < axisData.length; i++) {
+			int x1 = (int) (i * xScale + BORDER_GAP);
+			int y1 = (int) ((MAX_Y_VALUE - axisData[i]) * yScale + BORDER_GAP);
+			graphPoints.add(new Point(x1, y1-26));
+		}
+
+		// create x and y axes
+		g.setColor(Color.BLUE);
+		g.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, BORDER_GAP, BORDER_GAP);
+		g.setColor(Y_AXIS_COLOR);
+		g.drawLine(BORDER_GAP, getHeight() - BORDER_GAP, getWidth() - BORDER_GAP, getHeight() - BORDER_GAP);
+
+		// create labels for y axis.
+		for (int i = 0; i < axisData.length; i++) {
+			int x0 = BORDER_GAP;
+			int y0 = getHeight() - (((i + 1) * (getHeight() - BORDER_GAP * 2)) / Y_HATCH_CNT + BORDER_GAP);
+			
+			if(i == 0 || i % 3 == 0 || i == axisData.length - 1)
+				g.drawString( axisData[i] + "" , x0-20, y0);
+		}
+		
+		g.setColor(Color.BLUE);
+		// and for x axis
+		for (int i = 0; i < axisData.length - 1; i++) {
+			int x0 = (i + 1) * (getWidth() - BORDER_GAP * 2) / (axisData.length - 1) + BORDER_GAP;
+			//int x1 = x0;
+			int y0 = getHeight() - ( BORDER_GAP / 2);
+			//int y1 = y0 - GRAPH_POINT_WIDTH;
+			if(i == 0 || i % 3 == 0 || i == axisData.length - 1)
+				g.drawString( (( i + 1 ) * XInterval) + "" , x0, y0);
+			//g.drawLine(x0, y0, x1, y1);
+		}
+
+		
+		g.setColor(GRAPH_COLOR);
+		for (int i = 0; i < graphPoints.size() - 1; i++) {
+			int x1 = graphPoints.get(i).x;
+				int y1 = graphPoints.get(i).y;
+				int x2 = graphPoints.get(i + 1).x;
+				int y2 = graphPoints.get(i + 1).y;
+			g.drawLine(x1, y1, x2, y2);
+		}
+		
+		// highlight data points
+		g.setColor(GRAPH_POINT_COLOR);
+		for (int i = 0; i < graphPoints.size(); i++) {
+			int x = graphPoints.get(i).x - GRAPH_POINT_WIDTH / 2;
+			int y = graphPoints.get(i).y - GRAPH_POINT_WIDTH / 2;
+			;
+//			int ovalW = GRAPH_POINT_WIDTH;
+//			int ovalH = GRAPH_POINT_WIDTH;
+			g.drawString("X", x+4, y+12);
+		
+			//g.fillOval(x, y, ovalW, ovalH);
+		}
+		
+	}
+	
+	@Override
+	public void paintComponent(Graphics g) {
+		// This is called when the panel needs to be drawn to the screen
+		
+		try {
+			// do default painting first (fills the background etc.)
+			super.paintComponent(g);
+			
+			// draw a title string
+			int titleXPosition = ( getWidth() / 2 ) - Mysplitpane.chartTitle.length();
+			int titleYPosition = ( getHeight() / 2 ) - Mysplitpane.yLabel.length();
+			
+			g.drawString(Mysplitpane.chartTitle, titleXPosition , 20);
+			g.drawString(Mysplitpane.yLabel, 0, titleYPosition);
+			
+			// determine the maximum value of the datapoints for scaling
+			float[] chartData = new float[Mysplitpane.chartData.length];
+			for(int i = 0; i < chartData.length; i++) {
+				chartData[i] = Mysplitpane.chartData[i];
+			}
+			Arrays.sort(chartData);
+			MAX_Y_VALUE = (int)chartData[chartData.length - 1];
+			
+			// paint the grap on the pannel
+			drawGraph(g, Mysplitpane.chartData, Mysplitpane.xStart, Mysplitpane.xInterval);
+			
+			g.setColor(Color.BLACK);
+			g.drawString(Mysplitpane.xLabel, titleXPosition, getHeight() - (BORDER_GAP / 4) );
+		}
+		catch(NullPointerException e) 
+		{
+			
+		}
+	}
+	
+	
+	//-----------------------------------------------------------------
+	//  Displays the main frame of the program.
+	//-----------------------------------------------------------------
+	/*public static void main(String[] args) {
+
+		JFrame frame = new JFrame("A graphics program");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		frame.getContentPane().add(new GraphDiagram());
+
+		frame.pack();
+		frame.setVisible(true);
+	}*/
+}

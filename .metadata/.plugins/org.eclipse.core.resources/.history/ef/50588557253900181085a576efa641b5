@@ -1,0 +1,37 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+/**
+ * 
+ */
+
+/**
+ * @author user
+ *
+ */
+class Test {
+
+	/**
+	 * Test method for {@link Codec#Codec(java.lang.String)}.
+	 */
+	@org.junit.jupiter.api.Test
+	final void testCodec() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	/**
+	 * Test method for {@link Codec#Encode(java.lang.String)}.
+	 */
+	@org.junit.jupiter.api.Test
+	final void testEncode() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	/**
+	 * Test method for {@link Codec#Decode(java.lang.String)}.
+	 */
+	@org.junit.jupiter.api.Test
+	final void testDecode() {
+		fail("Not yet implemented"); // TODO
+	}
+
+}

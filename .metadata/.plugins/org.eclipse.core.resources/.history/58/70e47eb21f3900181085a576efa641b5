@@ -1,0 +1,12 @@
+/**
+ * 
+ */
+
+/**
+ * @author c3496473
+ *
+ */
+public class LinkElement<T> {
+	private final T theElement;
+
+}

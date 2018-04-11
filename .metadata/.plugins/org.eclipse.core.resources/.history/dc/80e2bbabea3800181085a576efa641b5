@@ -1,0 +1,32 @@
+package test;
+import MyEncodingLogic.Codec;
+import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
+import org.junit.Test;
+
+public class EncodeTest {
+	Codec test = new Codec("123456");
+	
+	@Test
+	public void testEncode() {
+		System.out.println(test.Encode("lamin"));
+		//assertTrue(false);
+		String expected = "ohnmm0325Ap";
+		
+		assertThat(expected, is(test.Encode("lamin")));
+		
+	}
+
+	
+	
+	
+//	@Test
+//	public void testDecode() {
+//		System.out.println(test.Encode("lamin"));
+//		assertTrue
+//		
+//		
+//	}
+
+}

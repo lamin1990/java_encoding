@@ -1,0 +1,14 @@
+package test;
+import MyEncodingLogic.Codec;
+
+public class EncodeTest {
+	Codec test = new Codec("123456");
+	
+	public void testEncode() {
+		System.out.println(test.Encode("lamin"));
+		
+		
+		
+	}
+
+}
